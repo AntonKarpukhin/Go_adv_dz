@@ -12,7 +12,11 @@ func main() {
 	godotenv.Load()
 	router := http.NewServeMux()
 
-	verify.NewVerifierHandler(router, file.NewJsFile("data.json"))
+	// Создаем обработчик
+	verifierHandler := NewVerifierHandler(router, db)
+
+	// Останавливаем горутину перед завершением приложения
+	defer verifierHandler.Stop()
 
 	server := http.Server{
 		Addr:    ":8083",

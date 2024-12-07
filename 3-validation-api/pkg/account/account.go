@@ -5,7 +5,7 @@ import "math/rand"
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-*!")
 
 type Account struct {
-	Email    string `json:"email"`
+	Email    string `json:"email" validate:"required,email"`
 	Password string `json:"password"`
 }
 

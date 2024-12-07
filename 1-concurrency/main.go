@@ -19,6 +19,7 @@ func main() {
 
 	go func() {
 		wg.Wait()
+		close(doubleNumbersChan)
 	}()
 
 	for square := range doubleNumbersChan {
@@ -40,5 +41,4 @@ func doubleNumbers(startNumbersChan chan int, doubleNumbersChan chan int, wg *sy
 	for num := range startNumbersChan {
 		doubleNumbersChan <- num * num
 	}
-	close(doubleNumbersChan)
 }

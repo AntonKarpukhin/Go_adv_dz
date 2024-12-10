@@ -5,6 +5,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"orderApi/iternal/product"
+	"orderApi/iternal/user"
 	"os"
 )
 
@@ -17,5 +18,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&product.Product{})
+	db.AutoMigrate(&product.Product{}, &user.User{})
 }

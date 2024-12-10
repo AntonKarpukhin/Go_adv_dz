@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"orderApi/configs"
+	"orderApi/iternal/auth"
 	"orderApi/iternal/product"
+	"orderApi/iternal/user"
 	"orderApi/pkg/db"
 	"orderApi/pkg/middleware"
 )
@@ -16,10 +18,19 @@ func main() {
 
 	//Repositories
 	productRepository := product.NewProductRepository(database)
+	userRepository := user.NewUserRepository(database)
+
+	//Services
+	authServices := auth.NewAuthService(userRepository)
 
 	//Handler
 	product.NewProductHandler(router, product.ProductHandler{
 		ProductRepository: productRepository,
+	})
+
+	auth.NewAuthHandler(router, auth.AuthHandlerDeps{
+		Config:      conf,
+		AuthService: authServices,
 	})
 
 	//Middlewares

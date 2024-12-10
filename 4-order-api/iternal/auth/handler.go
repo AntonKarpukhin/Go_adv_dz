@@ -59,7 +59,9 @@ func (handler *AuthHandler) Verifying() http.HandlerFunc {
 			response.Json(w, "Не правильный телефон или код", http.StatusUnauthorized)
 			return
 		}
-		token, errToken := jwt.NewJWT(handler.Config.Auth.Secret).Create(res.Phone)
+		token, errToken := jwt.NewJWT(handler.Config.Auth.Secret).Create(jwt.JWTData{
+			Phone: res.Phone,
+		})
 		if errToken != nil {
 			response.Json(w, errToken.Error(), http.StatusInternalServerError)
 			return
